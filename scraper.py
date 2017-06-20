@@ -17,7 +17,7 @@ soup = BeautifulSoup(html.read())
 for listing in soup.find_all('div'):
   record = {
     'DA_number': str(listing.h4.a.string),
-    'application_id': str(listing.h4.a.['href']),
+    'application_id': str(listing.h4.a['href'])
     
   }
 
