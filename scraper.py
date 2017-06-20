@@ -1,23 +1,27 @@
 import scraperwiki
 import lxml.html
 import datetime
-url = "http://web.archive.org/web/20110514112442/http://unstats.un.org/unsd/demographic/products/socind/education.htm"
+
+from bs4 import BeautifulSoup
+import logging
+import sqlite3
+import urllib2
+
+
+url = "http://eplanning.bankstown.nsw.gov.au/ApplicationSearch/ApplicationSearchThroughLodgedDate?day=yesterday"
 #
 # # Read in a page
-html = scraperwiki.scrape(url)
-#print html
+html = urllib2.urlopen(url)
+soup = BeautifulSoup(html.read())
 
-root = lxml.html.fromstring(html)
-for tr in root.cssselect("div[align='left'] tr"):
-    tds = tr.cssselect("td")
-    print tds
-    if len(tds)==12:
-        data = {
-            'country' : tds[0].text_content(),
-            'years_in_school' : int(tds[4].text_content())
-        }
-        print data
-#
+for listing in soup.find_all('div'):
+  record = {
+    'DA_number': str(listing.h4.a.string),
+    'application_id': str(listing.h4.a.['href']),
+    
+  }
+
+
 # # Find something on the page using css selectors
 # root = lxml.html.fromstring(html)
 # root.cssselect("div[align='left']")
