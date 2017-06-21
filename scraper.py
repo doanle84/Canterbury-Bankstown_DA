@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+import BeautifulSoup
 import scraperwiki
 import lxml.html
 import datetime
