@@ -10,7 +10,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 # Constants to be replaced
 hostUrl = 'http://eplanning.bankstown.nsw.gov.au'
-searchPath = '/ApplicationSearch/ApplicationSearchThroughLodgedDate?day=yesterday'
+searchPath = '/ApplicationSearch/ApplicationSearchThroughLodgedDate?day=thisweek'
 prefixAppLink = '/ApplicationSearch/ApplicationDetails?applicationId='
 prefixLodgementDate = 'Lodged:'
 prefixApplicant = 'Applicant:' 
@@ -50,7 +50,7 @@ for listing in htmlContents.find_all('div'):
     		'da_number': str(listing.h4.a.string),
     		'application_id': appId[1],
     		'date_scraped': dateScraped,
-    		'application_name': str(listing.string),
+    		'application_details': re.sub('[\s]+',' ',str(listing.contents[2].strip())),
     		'property_address': str(listing.b.string).strip(),
     		'applicant_name': applicantName,
     		'application_lodgement_date': lodgedDate
