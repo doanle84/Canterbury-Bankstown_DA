@@ -1,8 +1,7 @@
+from bs4 import BeautifulSoup
 import scraperwiki
 import lxml.html
 import datetime
-
-from bs4 import BeautifulSoup
 import logging
 import sqlite3
 import urllib2
