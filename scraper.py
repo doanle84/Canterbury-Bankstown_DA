@@ -7,11 +7,11 @@ import requests
 import re
 import json
 
-logging.basicConfig(level=logging.DEBUG)
+#logging.basicConfig(level=logging.DEBUG)
 
 # Constants to be replaced
 hostUrl = 'http://eplanning.bankstown.nsw.gov.au'
-searchPath = '/ApplicationSearch/ApplicationSearchThroughLodgedDate?day=yesterday'
+searchPath = '/ApplicationSearch/ApplicationSearchThroughLodgedDate?day=thisweek'
 prefixAppLink = '/ApplicationSearch/ApplicationDetails?applicationId='
 prefixLodgementDate = 'Lodged:'
 prefixApplicant = 'Applicant:' 
@@ -76,7 +76,7 @@ if html.status_code == requests.codes.ok:
 				'date_received': dateReceived
 				}
 				
-				#print record
+				print record
 				
 				# Skip if the record already exists in database.
 				try:
