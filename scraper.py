@@ -71,8 +71,8 @@ if html.status_code == requests.codes.ok:
 				'info_url': str(hostUrl + prefixAppLink + applicationId),
 				'comment_url': commentUrl,
 				'date_scraped': dateScraped,
-				'applicant_name': applicantName,
-				'application_id': applicationId,# internal application ID for href to council website
+				#'applicant_name': applicantName,
+				#'application_id': applicationId,# internal application ID for href to council website
 				'date_received': dateReceived
 				}
 				
