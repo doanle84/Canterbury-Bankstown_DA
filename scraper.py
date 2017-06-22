@@ -76,7 +76,7 @@ if html.status_code == requests.codes.ok:
 				'date_received': dateReceived
 				}
 				
-				print record
+				#print record
 				
 				# Skip if the record already exists in database.
 				try:
