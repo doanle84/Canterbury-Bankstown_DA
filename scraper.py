@@ -7,7 +7,7 @@ import requests
 import re
 import json
 
-#logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)
 
 # Constants to be replaced
 hostUrl = 'http://eplanning.bankstown.nsw.gov.au'
@@ -25,7 +25,7 @@ googleURL = 'https://maps.googleapis.com/maps/api/geocode/json?address='
 apiKey = 'AIzaSyAZ42WZR4AL7cr5H0KiW7fKSWEYEDv0G5Y'
 
 # Structure of the html for one DA:
-#testCon = '<div><h4><a href="/ApplicationSearch/ApplicationDetails?applicationId=17780599">CD-266/2017</a></h4>Private Certified Complying Development- Fitout of tenancy K118 as &#39;The Mobile Phone Company&#39; <br />Address: <b> 1 North Terrace BANKSTOWNNSW2200 </b> <br /><label id="1" onmouseover="ShowMoreData(1);">[More]</label><div id="Data1" style="display: none;margin-left: 15px">Lodged: 19/06/2017 12:00:00 AM ( :by )<br />Applicant: Studio Mkz <br /></div></div>'
+#testCon = '<div><h4><a href="/ApplicationSearch/applicationDescription?applicationId=17780599">CD-266/2017</a></h4>Private Certified Complying Development- Fitout of tenancy K118 as &#39;The Mobile Phone Company&#39; <br />Address: <b> 1 North Terrace BANKSTOWNNSW2200 </b> <br /><label id="1" onmouseover="ShowMoreData(1);">[More]</label><div id="Data1" style="display: none;margin-left: 15px">Lodged: 19/06/2017 12:00:00 AM ( :by )<br />Applicant: Studio Mkz <br /></div></div>'
 
 html = requests.get(hostUrl + searchPath)
 
@@ -53,7 +53,7 @@ if html.status_code == requests.codes.ok:
 				propertyAddress = re.sub('[\s]+',' ',str(listing.b.string).strip())
 				
 				# TODO: change back to 2 with real scaping
-				applicationDetails = re.sub('[\s]+',' ',str(listing.contents[2].strip()))
+				applicationDescription = re.sub('[\s]+',' ',str(listing.contents[2].strip()))
 				
 				# get the longitude and latitude using Google API based on address
 				# Replace the spaces with +
@@ -65,15 +65,16 @@ if html.status_code == requests.codes.ok:
 				####################################################################
 				
 				record = {
-				'council_reference': str(listing.h4.a.string),
+				'council_reference': str(listing.h4.a.string).strip(),
 				'address': propertyAddress,
-				'description': applicationDetails,
 				'info_url': str(hostUrl + prefixAppLink + applicationId),
+				'description': applicationDescription,
 				'comment_url': commentUrl,
-				'date_scraped': dateScraped,
+				'date_received': dateReceived,
+				'date_scraped': dateScraped
 				#'applicant_name': applicantName,
 				#'application_id': applicationId,# internal application ID for href to council website
-				'date_received': dateReceived
+				
 				}
 				
 				print record
